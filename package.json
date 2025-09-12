@@ -1,8 +1,16 @@
 {
   "name": "nexml-playground-frontend",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
+  "author": {
+    "name": "Andrei Boghiu",
+    "url": "https://github.com/Andrei-Boghiu"
+  },
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/Andrei-Boghiu/nexml-playground-frontend"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -10,11 +18,21 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.1",
+    "@tanstack/react-query": "^5.87.4",
+    "@tanstack/react-query-devtools": "^5.87.4",
+    "axios": "^1.12.1",
+    "axios-auth-refresh": "^3.3.6",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "react-haiku": "^2.4.1",
+    "react-hook-form": "^7.62.0",
+    "react-router-dom": "^7.7.1",
+    "zod": "^4.1.8"
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
+    "@tanstack/eslint-plugin-query": "^5.86.0",
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
     "@vitejs/plugin-react-swc": "^4.0.0",
