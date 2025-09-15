@@ -6,6 +6,7 @@ export type AuthContextType = {
   setUser: (user: User | null) => void;
   isLoading: boolean;
   logout: () => void;
+  isAuthenticated: boolean;
 };
 
 export const AuthContext = createContext<AuthContextType | null>(null);

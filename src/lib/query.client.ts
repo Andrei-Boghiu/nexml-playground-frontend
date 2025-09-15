@@ -8,7 +8,8 @@ export const queryClient = new QueryClient({
         const { data } = await axiosClient.get(String(queryKey[0]));
         return data;
       },
-      retry: 1,
+      retry: 3,
+      retryDelay: 500,
       staleTime: 5 * 60_000, // cache data for 5m
     },
     mutations: {
