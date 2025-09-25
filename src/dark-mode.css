@@ -1,0 +1,58 @@
+/* dark-mode.css */
+
+html,
+body {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+a {
+  color: #80b3ff;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  text-decoration: underline;
+}
+
+button,
+input,
+textarea,
+select {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+  border: 1px solid #333;
+}
+
+button:hover,
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #555;
+  outline: none;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #333;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  color: inherit;
+}
+
+th,
+td {
+  border: 1px solid #333;
+  padding: 0.5rem;
+}
+
+code,
+pre {
+  background-color: #1e1e1e;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
