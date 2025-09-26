@@ -19,6 +19,9 @@ import Archive from "./pages/Archive";
 import Support from "./pages/help-pages/Support";
 import ReportIssue from "./pages/help-pages/ReportIssue";
 import Feedback from "./pages/help-pages/Feedback";
+import Account from "./pages/user-pages/Account";
+import Billing from "./pages/user-pages/Billing";
+import Notifications from "./pages/user-pages/Notifications";
 
 function Router() {
   return (
@@ -55,6 +58,10 @@ function Router() {
           <Route path="/support" element={<Support />} />
           <Route path="/feedback" element={<Feedback />} />
           <Route path="/report-issue" element={<ReportIssue />} />
+
+          <Route path="/account" element={<Account />} />
+          <Route path="/billing" element={<Billing />} />
+          <Route path="/notifications" element={<Notifications />} />
         </Route>
       </Route>
 
