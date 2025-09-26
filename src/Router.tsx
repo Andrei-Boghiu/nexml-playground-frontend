@@ -16,6 +16,9 @@ import JobListingList from "./pages/JobListingList";
 import JobListing from "./pages/JobListing";
 import ArchiveList from "./pages/ArchiveList";
 import Archive from "./pages/Archive";
+import Support from "./pages/help-pages/Support";
+import ReportIssue from "./pages/help-pages/ReportIssue";
+import Feedback from "./pages/help-pages/Feedback";
 
 function Router() {
   return (
@@ -48,6 +51,10 @@ function Router() {
             <Route index element={<ArchiveList />} />
             <Route path=":id" element={<Archive />} />
           </Route>
+
+          <Route path="/support" element={<Support />} />
+          <Route path="/feedback" element={<Feedback />} />
+          <Route path="/report-issue" element={<ReportIssue />} />
         </Route>
       </Route>
 
