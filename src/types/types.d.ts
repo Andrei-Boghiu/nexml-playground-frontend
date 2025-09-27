@@ -9,3 +9,9 @@ export type PaginatedResponse<T> = {
     totalPages: number;
   };
 };
+
+export type PaginationConfig = {
+  page?: number;
+  limit?: number;
+  [key: string]: string | number | boolean | undefined;
+};

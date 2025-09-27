@@ -1,13 +1,6 @@
 import { z } from "zod";
+import { userSchema } from "./user.schema";
 
-export const registerSchema = z.object({
-  email: z.email(),
-  password: z.string().min(6),
-  firstName: z.string().optional(),
-  middleName: z.string().optional(),
-  lastName: z.string().optional(),
-  organization: z.string().optional(),
-  accessReason: z.string().optional().nullable(),
-});
+export const registerSchema = userSchema.omit({ id: true });
 
 export type RegisterFormData = z.infer<typeof registerSchema>;

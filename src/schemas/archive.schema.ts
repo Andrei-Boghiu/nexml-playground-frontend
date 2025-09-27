@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const archiveSchema = z
   .object({
-    id: z.string(),
+    id: z.uuidv4(),
     name: z.string().min(1, "Name is required"),
     description: z.string().min(1, "Description is required"),
   })
