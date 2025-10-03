@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const jobListingSchema = z
   .object({
-    id: z.string(),
+    id: z.uuidv4(),
     position: z.string().min(1, "Position is required"),
     department: z.string().optional(),
     description: z.string().min(1, "Description is required"),

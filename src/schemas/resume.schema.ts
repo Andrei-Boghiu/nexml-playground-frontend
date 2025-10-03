@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const resumeSchema = z
   .object({
-    id: z.string(),
+    id: z.uuidv4(),
     state: z.enum(["NOT_ANALYZED", "IN_PROGRESS", "ANALYZED", "FAILED", "REJECTED"]).optional(),
     candidateName: z.string().optional(),
     qualification: z.enum(["UNDER_QUALIFIED", "QUALIFIED", "OVERQUALIFIED"]).optional(),

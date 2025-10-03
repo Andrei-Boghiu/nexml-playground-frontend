@@ -1,5 +1,8 @@
+import { AppSidebar } from "@/components/navigation/app-sidebar";
+import { SiteHeader } from "@/components/navigation/site-header";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+
 import { Outlet } from "react-router-dom";
-import Sidebar from "./components/Sidebar";
 
 export type OverlayProps = {
   children: React.ReactNode;
@@ -7,10 +10,16 @@ export type OverlayProps = {
 
 export default function Overlay() {
   return (
-    <div>
-      <Sidebar />
-
-      <Outlet />
+    <div className="[--header-height:calc(--spacing(14))]">
+      <SidebarProvider className="flex flex-col">
+        <SiteHeader />
+        <div className="flex flex-1">
+          <AppSidebar />
+          <SidebarInset>
+            <Outlet />
+          </SidebarInset>
+        </div>
+      </SidebarProvider>
     </div>
   );
 }

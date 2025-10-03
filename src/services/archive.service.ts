@@ -1,9 +1,12 @@
+import buildQueryString from "@/utils/buildQueryString.util";
 import axiosClient from "../lib/axios.client";
 import type { ArchiveSchema, CreateArchiveFormData, UpdateArchiveFormData } from "../schemas/archive.schema";
-import type { PaginatedResponse } from "../types/types";
+import type { PaginatedResponse, PaginationConfig } from "../types/types";
 
-export const getArchives = async (): Promise<PaginatedResponse<ArchiveSchema>> => {
-  const response = await axiosClient.get("/archives");
+export const getArchives = async (query: PaginationConfig = {}): Promise<PaginatedResponse<ArchiveSchema>> => {
+  const url = `/archives${buildQueryString(query)}`;
+
+  const response = await axiosClient.get(url);
 
   return response.data;
 };

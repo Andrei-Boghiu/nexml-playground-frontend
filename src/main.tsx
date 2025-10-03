@@ -5,7 +5,6 @@ import Providers from "./Providers.tsx";
 import Router from "./Router.tsx";
 
 import "./index.css";
-import "./dark-mode.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

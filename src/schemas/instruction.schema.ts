@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const instructionSchema = z
   .object({
-    id: z.string(),
+    id: z.uuidv4(),
     name: z.string().min(1, "Name is required"),
     content: z.string().min(1, "Content is required"),
   })

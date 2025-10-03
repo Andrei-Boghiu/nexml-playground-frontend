@@ -14,8 +14,14 @@ import InstructionList from "./pages/InstructionList";
 import Instruction from "./pages/Instruction";
 import JobListingList from "./pages/JobListingList";
 import JobListing from "./pages/JobListing";
-import ArchiveList from "./pages/ArchiveList";
+import ArchiveDataTable from "./pages/archives/data-table";
 import Archive from "./pages/Archive";
+import Support from "./pages/help-pages/Support";
+import ReportIssue from "./pages/help-pages/ReportIssue";
+import Feedback from "./pages/help-pages/Feedback";
+import Account from "./pages/user-pages/Account";
+import Billing from "./pages/user-pages/Billing";
+import Notifications from "./pages/user-pages/Notifications";
 
 function Router() {
   return (
@@ -45,9 +51,17 @@ function Router() {
           </Route>
 
           <Route path="/archives">
-            <Route index element={<ArchiveList />} />
+            <Route index element={<ArchiveDataTable />} />
             <Route path=":id" element={<Archive />} />
           </Route>
+
+          <Route path="/support" element={<Support />} />
+          <Route path="/feedback" element={<Feedback />} />
+          <Route path="/report-issue" element={<ReportIssue />} />
+
+          <Route path="/account" element={<Account />} />
+          <Route path="/billing" element={<Billing />} />
+          <Route path="/notifications" element={<Notifications />} />
         </Route>
       </Route>
 
