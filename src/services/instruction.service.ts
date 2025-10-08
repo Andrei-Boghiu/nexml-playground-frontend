@@ -1,14 +1,20 @@
-import axiosClient from "../lib/axios.client";
+import axiosClient from "@/lib/axios.client";
+import buildQueryString from "@/utils/buildQueryString.util";
+import type { PaginatedResponse, PaginatedRequest } from "@/types/types";
 import type {
   InstructionSchema,
   CreateInstructionFormData,
   UpdateInstructionFormData,
-} from "../schemas/instruction.schema";
-import type { PaginatedResponse } from "../types/types";
+} from "@/schemas/instruction.schema";
 
-export const getInstructions = async (): Promise<PaginatedResponse<InstructionSchema>> => {
-  const response = await axiosClient.get("/instructions");
+export const getInstructions = async ({
+  search,
+  page,
+  limit,
+}: PaginatedRequest): Promise<PaginatedResponse<InstructionSchema>> => {
+  const queryString = buildQueryString({ search, page, limit });
 
+  const response = await axiosClient.get(`/instructions${queryString ? `?${queryString}` : ""}`);
   return response.data;
 };
 

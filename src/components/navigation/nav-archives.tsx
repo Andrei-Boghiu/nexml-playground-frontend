@@ -16,7 +16,7 @@ import { limit, page } from "./config";
 
 export default function NavArchives() {
   const { data: archives } = useQuery({
-    queryKey: ["archives", "get-all", { page, limit }],
+    queryKey: ["archives", { page, limit }],
     queryFn: () => getArchives({ page, limit }),
   });
 

@@ -1,6 +1,8 @@
-import { Outlet, useNavigate } from "react-router-dom";
-import { useAuth } from "../auth/useAuth";
 import { useEffect } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
+
+import { useAuth } from "@/auth/useAuth";
+import AuthLoader from "@/components/misc/auth-loader";
 
 export default function AuthRoutes() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -12,8 +14,7 @@ export default function AuthRoutes() {
     }
   }, [isLoading, isAuthenticated, navigate]);
 
-  // ! to replace with global spinner
-  if (isLoading) return <div>Authenticating...</div>;
+  if (isLoading) return <AuthLoader />;
 
   if (isAuthenticated) return null; // nothing to render while redirecting
 

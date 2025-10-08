@@ -1,89 +1,91 @@
-import { loginSchema, type LoginFormData } from "../schemas/login.schema";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { loginUser } from "../services/auth.service";
-import { useForm } from "react-hook-form";
-import { useAuth } from "../auth/useAuth";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import { loginSchema, type LoginFormData } from "@/schemas/login.schema";
+import { loginUser } from "@/services/auth.service";
+
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
-import { Loader2 } from "lucide-react";
+import { Spinner } from "@/components/ui/spinner";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+
+import { humanizeFieldName } from "@/utils/humanizeFieldName.util";
+import { useAuth } from "@/auth/useAuth";
+
+import type { ApiError } from "@/types/types";
+
+const getFieldType = (name: keyof LoginFormData) =>
+  name === "password" ? "password" : name === "email" ? "email" : "text";
+
+const fields = Object.keys(loginSchema.shape) as Array<keyof LoginFormData>;
 
 export default function AuthLogin() {
   const { setUser } = useAuth();
   const queryClient = useQueryClient();
+  const [formError, setFormError] = useState<string | null>(null);
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
   });
 
-  const { mutate, isPending, isError, error } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: loginUser,
     onSuccess: (userData) => {
       setUser(userData);
       window.localStorage.setItem("AUTH_USER", JSON.stringify(userData));
       queryClient.invalidateQueries();
     },
+    onError: (error: ApiError) => {
+      const msg = error?.response?.data?.error;
+      setFormError(msg || "Login failed");
+    },
   });
-
-  // @ts-ignore ¯\_(ツ)_/¯
-  const errorMessage = error?.response?.data?.error;
 
   const onSubmit = (data: LoginFormData) => mutate(data);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <Card className="w-full max-w-md">
+      <Card className="w-full max-w-md shadow-md">
         <CardHeader>
-          <CardTitle className="text-2xl font-semibold">NEXML::Login</CardTitle>
+          <CardTitle className="text-2xl font-semibold tracking-tight">NEXML::Login</CardTitle>
         </CardHeader>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <CardContent className="space-y-4">
-              {/* Email */}
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input type="email" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+            <CardContent className="flex flex-col gap-3 py-3">
+              {fields.map((name) => (
+                <FormField
+                  key={name}
+                  control={form.control}
+                  name={name}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{humanizeFieldName(name)}</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          value={field.value ?? ""}
+                          type={getFieldType(field.name)}
+                          className="w-full"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              ))}
 
-              {/* Password */}
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input type="password" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {isError && <p className="text-sm text-destructive text-center">{errorMessage || "Login failed"}</p>}
+              <FormMessage>{formError}</FormMessage>
             </CardContent>
 
             <CardFooter className="flex flex-col gap-3">
-              <Button type="submit" disabled={isPending} className="w-full mt-4">
-                {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              <Button type="submit" disabled={isPending} aria-busy={isPending} className="w-full mt-4">
+                {isPending && <Spinner />}
                 {isPending ? "Logging in..." : "Login"}
               </Button>
 
