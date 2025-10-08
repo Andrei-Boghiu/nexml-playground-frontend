@@ -1,13 +1,20 @@
-import axiosClient from "../lib/axios.client";
+import axiosClient from "@/lib/axios.client";
+import buildQueryString from "@/utils/buildQueryString.util";
+import type { PaginatedRequest, PaginatedResponse } from "@/types/types";
 import type {
   JobListingSchema,
   CreateJobListingFormData,
   UpdateJobListingFormData,
-} from "../schemas/job-listing.schema";
-import type { PaginatedResponse } from "../types/types";
+} from "@/schemas/job-listing.schema";
 
-export const getJobListings = async (): Promise<PaginatedResponse<JobListingSchema>> => {
-  const response = await axiosClient.get("/job-listings");
+export const getJobListings = async ({
+  search,
+  page,
+  limit,
+}: PaginatedRequest): Promise<PaginatedResponse<JobListingSchema>> => {
+  const queryString = buildQueryString({ search, page, limit });
+
+  const response = await axiosClient.get(`/job-listings${queryString ? `?${queryString}` : ""}`);
 
   return response.data;
 };

@@ -1,9 +1,16 @@
-import axiosClient from "../lib/axios.client";
-import type { PolicySchema, CreatePolicyFormData, UpdatePolicyFormData } from "../schemas/policy.schema";
-import type { PaginatedResponse } from "../types/types";
+import axiosClient from "@/lib/axios.client";
+import buildQueryString from "@/utils/buildQueryString.util";
+import type { PolicySchema, CreatePolicyFormData, UpdatePolicyFormData } from "@/schemas/policy.schema";
+import type { PaginatedRequest, PaginatedResponse } from "@/types/types";
 
-export const getPolicies = async (): Promise<PaginatedResponse<PolicySchema>> => {
-  const response = await axiosClient.get("/policies");
+export const getPolicies = async ({
+  search,
+  page,
+  limit,
+}: PaginatedRequest): Promise<PaginatedResponse<PolicySchema>> => {
+  const queryString = buildQueryString({ search, page, limit });
+
+  const response = await axiosClient.get(`/policies${queryString ? `?${queryString}` : ""}`);
 
   return response.data;
 };

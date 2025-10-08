@@ -1,9 +1,16 @@
-import axiosClient from "../lib/axios.client";
-import type { ResumeSchema, CreateResumeFormData, UpdateResumeFormData } from "../schemas/resume.schema";
-import type { PaginatedResponse } from "../types/types";
+import axiosClient from "@/lib/axios.client";
+import buildQueryString from "@/utils/buildQueryString.util";
+import type { PaginatedRequest, PaginatedResponse } from "@/types/types";
+import type { ResumeSchema, CreateResumeFormData, UpdateResumeFormData } from "@/schemas/resume.schema";
 
-export const getResumes = async (): Promise<PaginatedResponse<ResumeSchema>> => {
-  const response = await axiosClient.get("/resumes");
+export const getResumes = async ({
+  search,
+  page,
+  limit,
+}: PaginatedRequest): Promise<PaginatedResponse<ResumeSchema>> => {
+  const queryString = buildQueryString({ search, page, limit });
+
+  const response = await axiosClient.get(`/resumes${queryString ? `?${queryString}` : ""}`);
 
   return response.data;
 };

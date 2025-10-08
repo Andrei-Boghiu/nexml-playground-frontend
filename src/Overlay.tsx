@@ -15,7 +15,7 @@ export default function Overlay() {
         <SiteHeader />
         <div className="flex flex-1">
           <AppSidebar />
-          <SidebarInset>
+          <SidebarInset className="min-w-0 mx-5 my-3.5">
             <Outlet />
           </SidebarInset>
         </div>
