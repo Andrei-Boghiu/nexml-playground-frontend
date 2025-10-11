@@ -57,7 +57,7 @@ export default function Instruction() {
     },
   });
 
-  const { mutate: deleteInstr, isPending: isDeleting } = useMutation({
+  const { mutate: deleteInstructionMutate, isPending: isDeleting } = useMutation({
     mutationFn: () => deleteInstruction(id!),
     onSuccess: () => {
       toast.success("Instruction deleted successfully!");
@@ -94,7 +94,7 @@ export default function Instruction() {
         name={name}
         isSaving={isSaving}
         isDeleting={isDeleting}
-        onDelete={deleteInstr}
+        onDelete={deleteInstructionMutate}
         onSave={async (newName) => saveInstruction({ name: newName })}
         refetch={refetch}
         isFetching={isFetching}

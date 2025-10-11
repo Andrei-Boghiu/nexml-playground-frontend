@@ -85,7 +85,7 @@ export default function InstructionList() {
         query={{ dataUpdatedAt, refetch, isRefetching, isLoading }}
       />
 
-      <ContentCardGrid data={instructionList?.data} isLoading={isLoading} />
+      <ContentCardGrid data={instructionList?.data} isLoading={isLoading} redirectEntity="instructions" />
 
       <PaginationBottomBar
         totalPages={instructionList?.meta.totalPages || 0}

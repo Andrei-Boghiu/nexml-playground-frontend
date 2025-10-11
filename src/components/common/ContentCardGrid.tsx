@@ -19,9 +19,14 @@ export type BaseEntity = {
 export type ContentCardGridProps<T extends BaseEntity> = {
   data?: T[];
   isLoading: boolean;
+  redirectEntity: string;
 };
 
-export default function ContentCardGrid<T extends BaseEntity>({ data, isLoading }: ContentCardGridProps<T>) {
+export default function ContentCardGrid<T extends BaseEntity>({
+  data,
+  isLoading,
+  redirectEntity,
+}: ContentCardGridProps<T>) {
   if (isLoading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 m-4 animate-pulse">
@@ -59,7 +64,7 @@ export default function ContentCardGrid<T extends BaseEntity>({ data, isLoading 
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 m-4">
       {data?.map((entity) => (
         <Card key={entity.id} className="cursor-pointer">
-          <Link to={`/instructions/${entity.id}`}>
+          <Link to={`/${redirectEntity}/${entity.id}`}>
             <CardHeader>
               <CardTitle>{entity.name}</CardTitle>
               <CardDescription>{formatCreationDate(entity.createdAt)}</CardDescription>
