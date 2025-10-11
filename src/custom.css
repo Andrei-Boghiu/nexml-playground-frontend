@@ -1,0 +1,29 @@
+button {
+  cursor: pointer;
+}
+
+/* Override default dark theme of MDEditor.Markdown */
+.wmde-markdown {
+  background-color: var(--color-sidebar) !important;
+  color: var(--card-foreground) !important;
+}
+
+.wmde-markdown h1,
+.wmde-markdown h2,
+.wmde-markdown h3,
+.wmde-markdown h4,
+.wmde-markdown h5,
+.wmde-markdown h6 {
+  color: var(--card-foreground) !important;
+}
+
+.wmde-markdown p,
+.wmde-markdown li,
+.wmde-markdown blockquote {
+  color: var(--card-foreground) !important;
+}
+
+.dark .wmde-markdown {
+  background-color: var(--card) !important;
+  color: var(--card-foreground) !important;
+}

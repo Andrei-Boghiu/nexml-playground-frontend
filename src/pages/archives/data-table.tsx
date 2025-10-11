@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import { getArchives } from "../../services/archive.service";
-import CreateArchiveModal from "../../components/CreateArchiveModal";
 
 import { DataTable } from "@/components/ui/data-table";
 import { Button } from "@/components/ui/button";
@@ -49,7 +48,7 @@ export default function ArchiveDataTable() {
 
       {showCreateForm && (
         <dialog open={showCreateForm} onClose={() => setShowCreateForm(false)}>
-          <CreateArchiveModal />
+          <div>well this will be created later</div>
         </dialog>
       )}
 
