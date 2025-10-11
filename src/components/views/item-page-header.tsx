@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
-import { TypographyH3, TypographyP } from "@/components/ui/typography";
+import { TypographyH3 } from "@/components/ui/typography";
 import { Check, X, Edit, Trash2, RefreshCcw } from "lucide-react";
 
 import type { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
@@ -117,13 +117,14 @@ export default function ItemPageHeader({
         onConfirm={onDelete}
         isDeleting={isDeleting}
         message={
-          <>
-            <TypographyP>
-              Are you sure you want to delete the "<strong>{name}</strong>" instruction? <br />
-            </TypographyP>
+          <span className="space-y-4">
+            <span className="block">
+              Are you sure you want to delete the "<strong>{name}</strong>" item?
+              <br />
+            </span>
 
-            <TypographyP>Note: This action cannot be undone!</TypographyP>
-          </>
+            <span className="block">Note: This action cannot be undone!</span>
+          </span>
         }
       />
     </div>
