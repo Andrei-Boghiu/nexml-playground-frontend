@@ -7,10 +7,11 @@ import { formatCreationDate } from "./util";
 
 export type BaseEntity = {
   id: string | number;
-  name: string;
+  name?: string;
 
   content?: string;
   description?: string;
+  position?: string;
   department?: string;
 
   createdAt?: string | number | Date;
@@ -66,7 +67,7 @@ export default function ContentCardGrid<T extends BaseEntity>({
         <Card key={entity.id} className="cursor-pointer">
           <Link to={`/${redirectEntity}/${entity.id}`}>
             <CardHeader>
-              <CardTitle>{entity.name}</CardTitle>
+              <CardTitle>{entity?.name || entity?.position}</CardTitle>
               <CardDescription>{formatCreationDate(entity.createdAt)}</CardDescription>
             </CardHeader>
 
