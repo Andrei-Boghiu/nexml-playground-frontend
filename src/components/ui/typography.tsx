@@ -4,6 +4,32 @@ type ContentProp<T extends HTMLElement = HTMLElement> = {
   children: ReactNode;
 } & HTMLAttributes<T>;
 
+export function TypographyH1({ children, ...props }: ContentProp<HTMLHeadingElement>) {
+  const { className, ...restOfProps } = props;
+
+  return (
+    <h1
+      className={"scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance " + className}
+      {...restOfProps}
+    >
+      {children}
+    </h1>
+  );
+}
+
+export function TypographyH2({ children, ...props }: ContentProp<HTMLHeadingElement>) {
+  const { className, ...restOfProps } = props;
+
+  return (
+    <h2
+      className={"scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0 " + className}
+      {...restOfProps}
+    >
+      {children}
+    </h2>
+  );
+}
+
 export function TypographyH3({ children, ...props }: ContentProp<HTMLHeadingElement>) {
   const { className, ...restOfProps } = props;
 
