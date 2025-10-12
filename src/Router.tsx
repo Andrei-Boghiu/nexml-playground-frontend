@@ -62,6 +62,8 @@ function Router() {
           <Route path="/account" element={<Account />} />
           <Route path="/billing" element={<Billing />} />
           <Route path="/notifications" element={<Notifications />} />
+
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Route>
 
