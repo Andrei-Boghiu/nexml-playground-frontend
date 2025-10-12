@@ -90,19 +90,19 @@ const topStats = [
 ];
 
 const resumeTrends = [
-  { week: 40, startDate: "Sep 29 – Oct 5", resumesAnalyzed: 142 },
-  { week: 39, startDate: "Sep 22 – Sep 28", resumesAnalyzed: 118 },
-  { week: 38, startDate: "Sep 15 – Sep 21", resumesAnalyzed: 134 },
-  { week: 37, startDate: "Sep 8 – Sep 14", resumesAnalyzed: 157 },
-  { week: 36, startDate: "Sep 1 – Sep 7", resumesAnalyzed: 91 },
-  { week: 35, startDate: "Aug 25 – Aug 31", resumesAnalyzed: 105 },
-  { week: 34, startDate: "Aug 18 – Aug 24", resumesAnalyzed: 176 },
-  { week: 33, startDate: "Aug 11 – Aug 17", resumesAnalyzed: 152 },
-  { week: 32, startDate: "Aug 4 – Aug 10", resumesAnalyzed: 123 },
-  { week: 31, startDate: "Jul 28 – Aug 3", resumesAnalyzed: 138 },
-  { week: 30, startDate: "Jul 21 – Jul 27", resumesAnalyzed: 97 },
-  { week: 29, startDate: "Jul 14 – Jul 20", resumesAnalyzed: 164 },
   { week: 28, startDate: "Jul 7 – Jul 13", resumesAnalyzed: 112 },
+  { week: 29, startDate: "Jul 14 – Jul 20", resumesAnalyzed: 164 },
+  { week: 30, startDate: "Jul 21 – Jul 27", resumesAnalyzed: 97 },
+  { week: 31, startDate: "Jul 28 – Aug 3", resumesAnalyzed: 138 },
+  { week: 32, startDate: "Aug 4 – Aug 10", resumesAnalyzed: 123 },
+  { week: 33, startDate: "Aug 11 – Aug 17", resumesAnalyzed: 152 },
+  { week: 34, startDate: "Aug 18 – Aug 24", resumesAnalyzed: 176 },
+  { week: 35, startDate: "Aug 25 – Aug 31", resumesAnalyzed: 105 },
+  { week: 36, startDate: "Sep 1 – Sep 7", resumesAnalyzed: 91 },
+  { week: 37, startDate: "Sep 8 – Sep 14", resumesAnalyzed: 157 },
+  { week: 38, startDate: "Sep 15 – Sep 21", resumesAnalyzed: 134 },
+  { week: 39, startDate: "Sep 22 – Sep 28", resumesAnalyzed: 118 },
+  { week: 40, startDate: "Sep 29 – Oct 5", resumesAnalyzed: 142 },
 ];
 
 export default function MainDashboard() {
