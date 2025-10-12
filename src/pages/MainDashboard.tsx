@@ -1,155 +1,158 @@
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { TrendingUp, TrendingDown, Archive, Clock, UserCheck } from "lucide-react";
 import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
-  LineChart,
-  Line,
-  AreaChart,
-  Area,
-  CartesianGrid,
-  Legend,
-} from "recharts";
-
-const stats = {
-  statistics: {
-    resumes: {
-      total: 1240,
-      analyzed: 986,
-      inProgress: 45,
-      failed: 12,
-      rejected: 9,
-      notAnalyzed: 188,
-      averageScore: 78,
-      averageQualification: {
-        UNDER_QUALIFIED: 320,
-        QUALIFIED: 610,
-        OVERQUALIFIED: 50,
-      },
-    },
-    archives: {
-      total: 14,
-      averageResumesPerArchive: 88.5,
-      mostActiveArchive: {
-        id: "uuid",
-        name: "Frontend Developer Applicants - Q4",
-        resumeCount: 230,
-      },
-      monthlyArchiveGrowth: [
-        { month: "May", archives: 5 },
-        { month: "Jun", archives: 7 },
-        { month: "Jul", archives: 9 },
-        { month: "Aug", archives: 11 },
-        { month: "Sep", archives: 13 },
-        { month: "Oct", archives: 14 },
-      ],
-    },
-    jobListings: {
-      total: 7,
-      mostAnalyzedJob: "Senior Frontend Developer",
-      averageResumesPerJob: 177,
-      activityTrend: [
-        { week: "W1", jobs: 2, resumesAnalyzed: 150 },
-        { week: "W2", jobs: 3, resumesAnalyzed: 260 },
-        { week: "W3", jobs: 4, resumesAnalyzed: 410 },
-        { week: "W4", jobs: 5, resumesAnalyzed: 510 },
-      ],
-    },
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardDescription,
+  CardAction,
+  CardFooter,
+} from "@/components/ui/card";
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { Badge } from "@/components/ui/badge";
+const topStats = [
+  {
+    title: "Resumes Analyzed",
+    value: (
+      <div className="flex items-center gap-2">
+        <TrendingUp className="text-blue-500" />
+        <span>986</span>
+      </div>
+    ),
+    trend: "+12%",
+    up: true,
+    footer: (
+      <>
+        <div className="line-clamp-1 flex gap-2 font-medium">
+          Trending up this month <TrendingUp className="size-4" />
+        </div>
+        <div className="text-muted-foreground">Resume analysis rate increasing</div>
+      </>
+    ),
   },
-};
+  {
+    title: "Total Archives",
+    value: (
+      <div className="flex items-center gap-2">
+        <Archive className="text-amber-500 " />
+        <span>14</span>
+      </div>
+    ),
+    trend: "+8%",
+    up: true,
+    footer: (
+      <>
+        <div className="line-clamp-1 flex gap-2 font-medium">
+          Growth in archives stored <TrendingUp className="size-4" />
+        </div>
+        <div className="text-muted-foreground">Data management efficiency is up</div>
+      </>
+    ),
+  },
+  {
+    title: "Estimated Time Savings",
+    value: (
+      <div className="flex items-center gap-2">
+        <Clock className="text-purple-500 " />
+        <span>72 hrs</span>
+      </div>
+    ),
+    trend: "-5%",
+    up: false,
+    footer: (
+      <>
+        <div className="line-clamp-1 flex gap-2 font-medium">
+          Slight drop in productivity <TrendingDown className="size-4" />
+        </div>
+        <div className="text-muted-foreground">Investigate possible bottlenecks</div>
+      </>
+    ),
+  },
+  {
+    title: "Candidates Hired",
+    value: (
+      <div className="flex items-center gap-2">
+        <UserCheck className="text-green-500 " />
+        <span>37</span>
+      </div>
+    ),
+    trend: "+4%",
+    up: true,
+    footer: (
+      <>
+        <div className="line-clamp-1 flex gap-2 font-medium">
+          Hiring success up <TrendingUp className="size-4" />
+        </div>
+        <div className="text-muted-foreground">Better recruitment process overall</div>
+      </>
+    ),
+  },
+];
 
-const COLORS = ["#8884d8", "#82ca9d", "#ffc658"];
+const resumeTrends = [
+  { week: 28, startDate: "Jul 7 – Jul 13", resumesAnalyzed: 112 },
+  { week: 29, startDate: "Jul 14 – Jul 20", resumesAnalyzed: 164 },
+  { week: 30, startDate: "Jul 21 – Jul 27", resumesAnalyzed: 97 },
+  { week: 31, startDate: "Jul 28 – Aug 3", resumesAnalyzed: 138 },
+  { week: 32, startDate: "Aug 4 – Aug 10", resumesAnalyzed: 123 },
+  { week: 33, startDate: "Aug 11 – Aug 17", resumesAnalyzed: 152 },
+  { week: 34, startDate: "Aug 18 – Aug 24", resumesAnalyzed: 176 },
+  { week: 35, startDate: "Aug 25 – Aug 31", resumesAnalyzed: 105 },
+  { week: 36, startDate: "Sep 1 – Sep 7", resumesAnalyzed: 91 },
+  { week: 37, startDate: "Sep 8 – Sep 14", resumesAnalyzed: 157 },
+  { week: 38, startDate: "Sep 15 – Sep 21", resumesAnalyzed: 134 },
+  { week: 39, startDate: "Sep 22 – Sep 28", resumesAnalyzed: 118 },
+  { week: 40, startDate: "Sep 29 – Oct 5", resumesAnalyzed: 142 },
+];
 
 export default function MainDashboard() {
-  const { resumes, archives, jobListings } = stats.statistics;
-
-  const resumeStateData = [
-    { name: "Analyzed", value: resumes.analyzed },
-    { name: "In Progress", value: resumes.inProgress },
-    { name: "Not Analyzed", value: resumes.notAnalyzed },
-    { name: "Failed", value: resumes.failed },
-    { name: "Rejected", value: resumes.rejected },
-  ];
-
-  const qualificationData = [
-    { name: "Under Qualified", value: resumes.averageQualification.UNDER_QUALIFIED },
-    { name: "Qualified", value: resumes.averageQualification.QUALIFIED },
-    { name: "Overqualified", value: resumes.averageQualification.OVERQUALIFIED },
-  ];
-
   return (
-    <div className="grid grid-cols-1 xl:grid-cols-3 md:grid-cols-2 gap-4 p-6">
-      <Card className="col-span-2">
-        <CardHeader>
-          <CardTitle>Resume Analysis Overview</CardTitle>
-        </CardHeader>
-        <CardContent className="h-72">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={resumeStateData}>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="value" fill="#8884d8" radius={[8, 8, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
+    <div className="p-6 space-y-6">
+      {/* Top Stats */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+        {topStats.map(({ title, value, trend, up, footer }, i) => (
+          <Card key={`${i}-${title}`} className="@container/card">
+            <CardHeader>
+              <CardDescription>{title}</CardDescription>
+              <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl mt-3">{value}</CardTitle>
+              <CardAction>
+                <Badge variant="outline">
+                  {up ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
+                  {trend}
+                </Badge>
+              </CardAction>
+            </CardHeader>
+            <CardFooter className="flex-col items-start gap-1.5 text-sm">{footer}</CardFooter>
+          </Card>
+        ))}
+      </div>
 
+      {/* Area Chart */}
       <Card>
         <CardHeader>
-          <CardTitle>Candidate Qualification Distribution</CardTitle>
+          <CardTitle>Weekly Resume Analysis Report</CardTitle>
+          <CardDescription>The number of resumes analyzed per week over the past 3 months</CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-col items-center h-72">
+        <CardContent className="h-96">
           <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie data={qualificationData} dataKey="value" nameKey="name" outerRadius={100} label>
-                {qualificationData.map((_, i) => (
-                  <Cell key={i} fill={COLORS[i % COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Archive Growth Over Time</CardTitle>
-        </CardHeader>
-        <CardContent className="h-72">
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={archives.monthlyArchiveGrowth}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="month" />
+            <AreaChart data={resumeTrends}>
+              <defs>
+                <linearGradient id="colorResumes" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#8884d8" stopOpacity={0.4} />
+                  <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+              <XAxis dataKey="week" className="text-xs" />
               <YAxis />
-              <Tooltip />
-              <Line type="monotone" dataKey="archives" stroke="#82ca9d" strokeWidth={3} />
-            </LineChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
-
-      <Card className="col-span-2">
-        <CardHeader>
-          <CardTitle>Job Listing Activity</CardTitle>
-        </CardHeader>
-        <CardContent className="h-72">
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={jobListings.activityTrend}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="week" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Area type="monotone" dataKey="jobs" stroke="#8884d8" fill="#8884d8" fillOpacity={0.3} />
-              <Area type="monotone" dataKey="resumesAnalyzed" stroke="#82ca9d" fill="#82ca9d" fillOpacity={0.3} />
+              <Tooltip labelStyle={{ fontWeight: 600 }} contentStyle={{ borderRadius: 8, borderColor: "#ccc" }} />
+              <Area
+                type="monotone"
+                dataKey="resumesAnalyzed"
+                stroke="#8884d8"
+                fill="url(#colorResumes)"
+                strokeWidth={3}
+              />
             </AreaChart>
           </ResponsiveContainer>
         </CardContent>
