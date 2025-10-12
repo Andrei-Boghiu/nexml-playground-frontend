@@ -1,34 +1,52 @@
-import { BookOpen, Settings2, SquareTerminal, LifeBuoy, MessageSquare, Bug } from "lucide-react";
+import {
+  BookOpen,
+  Settings2,
+  SquareTerminal,
+  LifeBuoy,
+  MessageSquare,
+  Bug,
+  ListChecks,
+  Briefcase,
+  ScrollText,
+} from "lucide-react";
+import { buildPathnameMap } from "./util";
+import type { NavigationConfig, NavigationItem } from "./types";
 
 // Resume Archives pagination configuration
 export const page = 1;
 export const limit = 4;
 
-export const mainNavItems = [
+export const mainNavItems: NavigationConfig[] = [
   {
     title: "Dashboard",
     url: "/",
     icon: SquareTerminal,
-    isActive: true,
+  },
+  {
+    title: "Configuration",
+    defaultOpen: true,
     items: [
       {
         title: "Instructions",
         url: "/instructions",
+        icon: ListChecks,
       },
       {
         title: "Job Listings",
         url: "/job-listings",
+        icon: Briefcase,
       },
       {
         title: "Policies",
         url: "/policies",
+        icon: ScrollText,
       },
     ],
   },
   {
     title: "Documentation",
-    url: "/docs",
     icon: BookOpen,
+    defaultOpen: false,
     items: [
       {
         title: "Introduction",
@@ -55,7 +73,7 @@ export const mainNavItems = [
   },
 ];
 
-export const secondaryNavItems = [
+export const secondaryNavItems: NavigationItem[] = [
   {
     title: "Support",
     url: "/support",
@@ -73,12 +91,17 @@ export const secondaryNavItems = [
   },
 ];
 
-export const pathnameMap: Record<string, string> = {
-  "/": "Dashboard",
-  "/archives": "Archives",
+export const pathnameMap = {
+  ...buildPathnameMap(...mainNavItems, ...secondaryNavItems),
+
+  "/instructions/:id": "Instruction Details",
+  "/job-listings/:id": "Job Listing Details",
+  "/policies/:id": "Policy Details",
+
+  "/archives": "Archives List",
   "/archives/:id": "Archive Details",
-  "/archives/:id/edit": "Edit Archive",
+
+  "/notifications": "Notifications",
   "/account": "Account",
   "/billing": "Billing",
-  "/notifications": "Notifications",
 };

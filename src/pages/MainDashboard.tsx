@@ -1,71 +1,159 @@
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../auth/useAuth";
-import { userProfile } from "../services/auth.service";
-import { useQuery } from "@tanstack/react-query";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  LineChart,
+  Line,
+  AreaChart,
+  Area,
+  CartesianGrid,
+  Legend,
+} from "recharts";
 
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { Loader2 } from "lucide-react";
+const stats = {
+  statistics: {
+    resumes: {
+      total: 1240,
+      analyzed: 986,
+      inProgress: 45,
+      failed: 12,
+      rejected: 9,
+      notAnalyzed: 188,
+      averageScore: 78,
+      averageQualification: {
+        UNDER_QUALIFIED: 320,
+        QUALIFIED: 610,
+        OVERQUALIFIED: 50,
+      },
+    },
+    archives: {
+      total: 14,
+      averageResumesPerArchive: 88.5,
+      mostActiveArchive: {
+        id: "uuid",
+        name: "Frontend Developer Applicants - Q4",
+        resumeCount: 230,
+      },
+      monthlyArchiveGrowth: [
+        { month: "May", archives: 5 },
+        { month: "Jun", archives: 7 },
+        { month: "Jul", archives: 9 },
+        { month: "Aug", archives: 11 },
+        { month: "Sep", archives: 13 },
+        { month: "Oct", archives: 14 },
+      ],
+    },
+    jobListings: {
+      total: 7,
+      mostAnalyzedJob: "Senior Frontend Developer",
+      averageResumesPerJob: 177,
+      activityTrend: [
+        { week: "W1", jobs: 2, resumesAnalyzed: 150 },
+        { week: "W2", jobs: 3, resumesAnalyzed: 260 },
+        { week: "W3", jobs: 4, resumesAnalyzed: 410 },
+        { week: "W4", jobs: 5, resumesAnalyzed: 510 },
+      ],
+    },
+  },
+};
+
+const COLORS = ["#8884d8", "#82ca9d", "#ffc658"];
 
 export default function MainDashboard() {
-  const { logout } = useAuth();
-  const navigate = useNavigate();
+  const { resumes, archives, jobListings } = stats.statistics;
 
-  const {
-    data: profile,
-    isLoading,
-    isError,
-    refetch,
-  } = useQuery({
-    queryKey: ["auth", "profile"],
-    queryFn: userProfile,
-    enabled: false,
-  });
+  const resumeStateData = [
+    { name: "Analyzed", value: resumes.analyzed },
+    { name: "In Progress", value: resumes.inProgress },
+    { name: "Not Analyzed", value: resumes.notAnalyzed },
+    { name: "Failed", value: resumes.failed },
+    { name: "Rejected", value: resumes.rejected },
+  ];
 
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
-  };
+  const qualificationData = [
+    { name: "Under Qualified", value: resumes.averageQualification.UNDER_QUALIFIED },
+    { name: "Qualified", value: resumes.averageQualification.QUALIFIED },
+    { name: "Overqualified", value: resumes.averageQualification.OVERQUALIFIED },
+  ];
 
   return (
-    <Card className="mx-auto mt-10 max-w-lg shadow-lg">
-      <CardHeader className="text-center">
-        <CardTitle className="text-2xl font-bold">Main Dashboard</CardTitle>
-      </CardHeader>
+    <div className="grid grid-cols-1 xl:grid-cols-3 md:grid-cols-2 gap-4 p-6">
+      <Card className="col-span-2">
+        <CardHeader>
+          <CardTitle>Resume Analysis Overview</CardTitle>
+        </CardHeader>
+        <CardContent className="h-72">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={resumeStateData}>
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="value" fill="#8884d8" radius={[8, 8, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
 
-      <CardContent className="space-y-4 text-center">
-        <div className="flex flex-col gap-2">
-          <Button onClick={handleLogout} variant="destructive">
-            Logout
-          </Button>
-          <Button onClick={() => refetch()} variant="outline">
-            Profile Query
-          </Button>
-        </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>Candidate Qualification Distribution</CardTitle>
+        </CardHeader>
+        <CardContent className="flex flex-col items-center h-72">
+          <ResponsiveContainer width="100%" height="100%">
+            <PieChart>
+              <Pie data={qualificationData} dataKey="value" nameKey="name" outerRadius={100} label>
+                {qualificationData.map((_, i) => (
+                  <Cell key={i} fill={COLORS[i % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
 
-        <Separator className="my-4" />
+      <Card>
+        <CardHeader>
+          <CardTitle>Archive Growth Over Time</CardTitle>
+        </CardHeader>
+        <CardContent className="h-72">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={archives.monthlyArchiveGrowth}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="month" />
+              <YAxis />
+              <Tooltip />
+              <Line type="monotone" dataKey="archives" stroke="#82ca9d" strokeWidth={3} />
+            </LineChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
 
-        <div className="flex justify-center items-center gap-2">
-          <h5 className="font-medium">isLoading:</h5>
-          {isLoading && <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />}
-        </div>
-
-        <div>
-          <h5 className="font-medium">isError:</h5>
-          <span>{isError && <span className="text-destructive">Error</span>}</span>
-        </div>
-
-        {profile && (
-          <pre className="text-left rounded-md bg-muted p-3 text-sm overflow-x-auto">
-            {JSON.stringify(profile, null, 2)}
-          </pre>
-        )}
-      </CardContent>
-
-      <CardFooter className="justify-center text-sm text-muted-foreground">
-        <p>Welcome back, {profile?.firstName || "User"} 👋</p>
-      </CardFooter>
-    </Card>
+      <Card className="col-span-2">
+        <CardHeader>
+          <CardTitle>Job Listing Activity</CardTitle>
+        </CardHeader>
+        <CardContent className="h-72">
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart data={jobListings.activityTrend}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="week" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Area type="monotone" dataKey="jobs" stroke="#8884d8" fill="#8884d8" fillOpacity={0.3} />
+              <Area type="monotone" dataKey="resumesAnalyzed" stroke="#82ca9d" fill="#82ca9d" fillOpacity={0.3} />
+            </AreaChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
+    </div>
   );
 }
