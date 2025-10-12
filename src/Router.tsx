@@ -14,8 +14,8 @@ import InstructionList from "./pages/InstructionList";
 import Instruction from "./pages/Instruction";
 import JobListingList from "./pages/JobListingList";
 import JobListing from "./pages/JobListing";
-import ArchiveDataTable from "./pages/archives/data-table";
-import Archive from "./pages/Archive";
+import ArchiveList from "./pages/archives/ArchiveList";
+import Archive from "./pages/archives/Archive";
 import Support from "./pages/help-pages/Support";
 import ReportIssue from "./pages/help-pages/ReportIssue";
 import Feedback from "./pages/help-pages/Feedback";
@@ -51,7 +51,7 @@ function Router() {
           </Route>
 
           <Route path="/archives">
-            <Route index element={<ArchiveDataTable />} />
+            <Route index element={<ArchiveList />} />
             <Route path=":id" element={<Archive />} />
           </Route>
 

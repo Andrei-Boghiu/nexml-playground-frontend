@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import {
   SidebarGroup,
@@ -11,13 +11,15 @@ import {
 import { secondaryNavItems } from "./config";
 
 export function NavSecondary() {
+  const { pathname } = useLocation();
+
   return (
     <SidebarGroup className="mt-auto">
       <SidebarGroupContent>
         <SidebarMenu>
           {secondaryNavItems.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton asChild size="sm">
+              <SidebarMenuButton asChild size="sm" isActive={pathname === item.url}>
                 <Link to={item.url}>
                   <item.icon />
                   <span>{item.title}</span>
