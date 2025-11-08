@@ -9,7 +9,7 @@ import type { QueryObserverResult, RefetchOptions } from "@tanstack/react-query"
 import ConfirmDeleteModal from "../common/confirm-delete-modal";
 
 export type ItemPageHeaderProps = {
-  name: string;
+  title: string;
   onSave: (newTitle: string) => Promise<void>;
   onDelete: () => void;
   isSaving: boolean;
@@ -19,7 +19,7 @@ export type ItemPageHeaderProps = {
 };
 
 export default function ItemPageHeader({
-  name,
+  title,
   onSave,
   onDelete,
   isDeleting,
@@ -32,7 +32,7 @@ export default function ItemPageHeader({
   const [localName, setLocalName] = useState<string>("");
 
   useEffect(() => {
-    if (!isEditing && localName !== name) setLocalName(name);
+    if (!isEditing && localName !== title) setLocalName(title);
   }, [name, isEditing]);
 
   const handleSave = async () => {
@@ -43,7 +43,7 @@ export default function ItemPageHeader({
   };
 
   const handleCancel = () => {
-    setLocalName(name);
+    setLocalName(title);
     setIsEditing(false);
   };
 
@@ -64,7 +64,7 @@ export default function ItemPageHeader({
             className="flex-1"
             autoFocus
           />
-          <Button onClick={handleSave} disabled={isSaving || localName === name} size="sm">
+          <Button onClick={handleSave} disabled={isSaving || localName === title} size="sm">
             {isSaving ? <Spinner className="mr-1 inline-block" /> : <Check />}
           </Button>
           <Button onClick={handleCancel} disabled={isSaving} variant="outline" size="sm">
@@ -76,7 +76,7 @@ export default function ItemPageHeader({
           <div className="flex-1">
             <div className="flex items-center gap-2">
               <TypographyH3 className="flex items-center gap-3">
-                <span className={`${isSaving ? "opacity-60 italic" : ""}`}>{name}</span>
+                <span className={`${isSaving ? "opacity-60 italic" : ""}`}>{title}</span>
                 {isSaving && <Spinner className="inline align-middle relative top-[4px]" />}
               </TypographyH3>
             </div>
@@ -119,7 +119,7 @@ export default function ItemPageHeader({
         message={
           <span className="space-y-4">
             <span className="block">
-              Are you sure you want to delete the "<strong>{name}</strong>" item?
+              Are you sure you want to delete the "<strong>{title}</strong>" item?
               <br />
             </span>
 

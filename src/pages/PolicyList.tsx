@@ -12,7 +12,7 @@ import { createPolicySchema, type CreatePolicyFormData } from "@/schemas/policy.
 import { createPolicy, getPolicies } from "@/services/policy.service";
 
 const configFields: Record<keyof CreatePolicyFormData, NewItemField> = {
-  name: {
+  title: {
     type: "input",
     placeholder: "Forgery deep check",
   },

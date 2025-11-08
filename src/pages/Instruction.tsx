@@ -15,7 +15,7 @@ import { Badge } from "@/components/ui/badge";
 
 export default function Instruction() {
   const [content, setContent] = useState<string>("");
-  const [name, setName] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -40,7 +40,7 @@ export default function Instruction() {
 
   useEffect(() => {
     if (instruction) {
-      setName(instruction.name);
+      setTitle(instruction.title);
       setContent(instruction.content);
     }
   }, [instruction]);
@@ -91,11 +91,11 @@ export default function Instruction() {
   return (
     <div className="space-y-6 m-3.5">
       <ItemPageHeader
-        name={name}
+        title={title}
         isSaving={isSaving}
         isDeleting={isDeleting}
         onDelete={deleteInstructionMutate}
-        onSave={async (newName) => saveInstruction({ name: newName })}
+        onSave={async (title) => saveInstruction({ title })}
         refetch={refetch}
         isFetching={isFetching}
       />
