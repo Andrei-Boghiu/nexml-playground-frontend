@@ -13,7 +13,7 @@ import type { PaginatedRequest } from "@/types/types";
 import { createInstructionSchema, type CreateInstructionFormData } from "@/schemas/instruction.schema";
 
 const configFields: Record<keyof CreateInstructionFormData, NewItemField> = {
-  name: {
+  title: {
     type: "input",
     placeholder: "Forgery deep check",
   },

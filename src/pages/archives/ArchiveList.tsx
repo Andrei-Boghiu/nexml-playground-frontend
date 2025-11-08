@@ -12,7 +12,7 @@ import { createArchive, getArchives } from "@/services/archive.service";
 import { createArchiveSchema, type CreateArchiveFormData } from "@/schemas/archive.schema";
 
 const configFields: Record<keyof CreateArchiveFormData, NewItemField> = {
-  name: {
+  title: {
     type: "input",
     placeholder: "Archive: ACME-HR Technical Interviews Specialist (L3)",
   },

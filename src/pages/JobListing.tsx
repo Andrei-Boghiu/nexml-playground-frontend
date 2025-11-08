@@ -15,8 +15,8 @@ import type { UpdateJobListingFormData } from "@/schemas/job-listing.schema";
 import type { ApiError } from "@/types/types";
 
 export default function JobListing() {
-  const [description, setDescription] = useState<string>("");
-  const [position, setPosition] = useState<string>("");
+  const [content, setContent] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -41,8 +41,8 @@ export default function JobListing() {
 
   useEffect(() => {
     if (jobListing) {
-      setPosition(jobListing.position);
-      setDescription(jobListing.description);
+      setTitle(jobListing.title);
+      setContent(jobListing.content);
     }
   }, [jobListing]);
 
@@ -92,11 +92,11 @@ export default function JobListing() {
   return (
     <div className="space-y-6 m-3.5">
       <ItemPageHeader
-        name={position}
+        title={title}
         isSaving={isSaving}
         isDeleting={isDeleting}
         onDelete={deleteJobListingMutate}
-        onSave={async (newPosition) => saveJobListing({ position: newPosition })}
+        onSave={async (title) => saveJobListing({ title })}
         refetch={refetch}
         isFetching={isFetching}
       />
@@ -108,9 +108,9 @@ export default function JobListing() {
       </div>
 
       <ItemContentEditor
-        content={description}
+        content={content}
         isSaving={isSaving}
-        onSave={async (newDescription) => saveJobListing({ description: newDescription })}
+        onSave={async (content) => saveJobListing({ content })}
       />
     </div>
   );

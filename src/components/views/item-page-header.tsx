@@ -9,7 +9,7 @@ import type { QueryObserverResult, RefetchOptions } from "@tanstack/react-query"
 import ConfirmDeleteModal from "../common/confirm-delete-modal";
 
 export type ItemPageHeaderProps = {
-  name: string;
+  title: string;
   onSave: (newTitle: string) => Promise<void>;
   onDelete: () => void;
   isSaving: boolean;
@@ -19,7 +19,7 @@ export type ItemPageHeaderProps = {
 };
 
 export default function ItemPageHeader({
-  name,
+  title,
   onSave,
   onDelete,
   isDeleting,
@@ -29,21 +29,21 @@ export default function ItemPageHeader({
 }: ItemPageHeaderProps) {
   const [isDeleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [localName, setLocalName] = useState<string>("");
+  const [localTitle, setLocalTitle] = useState<string>("");
 
   useEffect(() => {
-    if (!isEditing && localName !== name) setLocalName(name);
-  }, [name, isEditing]);
+    if (!isEditing && localTitle !== title) setLocalTitle(title);
+  }, [title, isEditing]);
 
   const handleSave = async () => {
     if (isSaving) return;
 
-    await onSave(localName);
+    await onSave(localTitle);
     setIsEditing(false);
   };
 
   const handleCancel = () => {
-    setLocalName(name);
+    setLocalTitle(title);
     setIsEditing(false);
   };
 
@@ -54,8 +54,8 @@ export default function ItemPageHeader({
       {isEditing ? (
         <div className="flex items-center gap-2 flex-1">
           <Input
-            value={localName}
-            onChange={(e) => setLocalName(e.target.value)}
+            value={localTitle}
+            onChange={(e) => setLocalTitle(e.target.value)}
             disabled={isSaving}
             onKeyDown={(e) => {
               if (e.key === "Enter") handleSave();
@@ -64,7 +64,7 @@ export default function ItemPageHeader({
             className="flex-1"
             autoFocus
           />
-          <Button onClick={handleSave} disabled={isSaving || localName === name} size="sm">
+          <Button onClick={handleSave} disabled={isSaving || localTitle === title} size="sm">
             {isSaving ? <Spinner className="mr-1 inline-block" /> : <Check />}
           </Button>
           <Button onClick={handleCancel} disabled={isSaving} variant="outline" size="sm">
@@ -76,7 +76,7 @@ export default function ItemPageHeader({
           <div className="flex-1">
             <div className="flex items-center gap-2">
               <TypographyH3 className="flex items-center gap-3">
-                <span className={`${isSaving ? "opacity-60 italic" : ""}`}>{name}</span>
+                <span className={`${isSaving ? "opacity-60 italic" : ""}`}>{title}</span>
                 {isSaving && <Spinner className="inline align-middle relative top-[4px]" />}
               </TypographyH3>
             </div>
@@ -119,7 +119,7 @@ export default function ItemPageHeader({
         message={
           <span className="space-y-4">
             <span className="block">
-              Are you sure you want to delete the "<strong>{name}</strong>" item?
+              Are you sure you want to delete the "<strong>{title}</strong>" item?
               <br />
             </span>
 

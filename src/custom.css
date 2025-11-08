@@ -27,3 +27,14 @@ button {
   background-color: var(--card) !important;
   color: var(--card-foreground) !important;
 }
+
+.wmde-markdown ul,
+.wmde-markdown ol {
+  list-style: revert;
+  margin-left: 1em;
+  padding-left: 0;
+}
+
+.wmde-markdown li {
+  display: list-item;
+}

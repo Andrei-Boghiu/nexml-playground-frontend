@@ -12,17 +12,13 @@ import { createJobListingSchema, type CreateJobListingFormData } from "@/schemas
 import { createJobListing, getJobListings } from "@/services/job-listing.service";
 
 const configFields: Record<keyof CreateJobListingFormData, NewItemField> = {
-  position: {
+  title: {
     type: "input",
     placeholder: "Senior Sails Representative",
   },
-  description: {
+  content: {
     type: "textarea",
     placeholder: "Professional with +10 years of experience in world wide...",
-  },
-  department: {
-    type: "input",
-    placeholder: "Sales",
   },
 };
 

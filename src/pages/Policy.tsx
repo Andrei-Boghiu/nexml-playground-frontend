@@ -17,7 +17,7 @@ import type { ApiError } from "@/types/types";
 
 export default function Policy() {
   const [content, setContent] = useState<string>("");
-  const [name, setName] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -42,7 +42,7 @@ export default function Policy() {
 
   useEffect(() => {
     if (policy) {
-      setName(policy.name);
+      setTitle(policy.title);
       setContent(policy.content);
     }
   }, [policy]);
@@ -93,11 +93,11 @@ export default function Policy() {
   return (
     <div className="space-y-6 m-3.5">
       <ItemPageHeader
-        name={name}
+        title={title}
         isSaving={isSaving}
         isDeleting={isDeleting}
         onDelete={deletePolicyMutate}
-        onSave={async (newName) => savePolicy({ name: newName })}
+        onSave={async (title) => savePolicy({ title })}
         refetch={refetch}
         isFetching={isFetching}
       />
