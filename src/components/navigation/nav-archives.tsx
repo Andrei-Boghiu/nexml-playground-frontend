@@ -34,7 +34,7 @@ export default function NavArchives() {
           </Link>
         </SidebarMenuItem>
         {archives?.data?.map((item) => (
-          <SidebarMenuItem key={item.title}>
+          <SidebarMenuItem key={item.id}>
             <SidebarMenuButton asChild isActive={pathname === `/archives/${item.id}`}>
               <Link to={`/archives/${item.id}`}>
                 <span>{item.title}</span>

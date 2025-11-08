@@ -29,21 +29,21 @@ export default function ItemPageHeader({
 }: ItemPageHeaderProps) {
   const [isDeleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [localName, setLocalName] = useState<string>("");
+  const [localTitle, setLocalTitle] = useState<string>("");
 
   useEffect(() => {
-    if (!isEditing && localName !== title) setLocalName(title);
-  }, [name, isEditing]);
+    if (!isEditing && localTitle !== title) setLocalTitle(title);
+  }, [title, isEditing]);
 
   const handleSave = async () => {
     if (isSaving) return;
 
-    await onSave(localName);
+    await onSave(localTitle);
     setIsEditing(false);
   };
 
   const handleCancel = () => {
-    setLocalName(title);
+    setLocalTitle(title);
     setIsEditing(false);
   };
 
@@ -54,8 +54,8 @@ export default function ItemPageHeader({
       {isEditing ? (
         <div className="flex items-center gap-2 flex-1">
           <Input
-            value={localName}
-            onChange={(e) => setLocalName(e.target.value)}
+            value={localTitle}
+            onChange={(e) => setLocalTitle(e.target.value)}
             disabled={isSaving}
             onKeyDown={(e) => {
               if (e.key === "Enter") handleSave();
@@ -64,7 +64,7 @@ export default function ItemPageHeader({
             className="flex-1"
             autoFocus
           />
-          <Button onClick={handleSave} disabled={isSaving || localName === title} size="sm">
+          <Button onClick={handleSave} disabled={isSaving || localTitle === title} size="sm">
             {isSaving ? <Spinner className="mr-1 inline-block" /> : <Check />}
           </Button>
           <Button onClick={handleCancel} disabled={isSaving} variant="outline" size="sm">
